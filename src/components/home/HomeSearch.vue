@@ -1,10 +1,22 @@
 <template>
-	<form action="#" v-on:submit.prevent>
-		<input @keyup="searchGit()" type="text" v-model="nick" ref="input" />
+	<form action="#" @submit.prevent>
+		<input
+			v-model="nick"
+			placeholder="Type Username"
+			@keyup="
+				getUser();
+				getRepos();
+			"
+			ref="input"
+		/>
 	</form>
-	<div v-if="github.name">
-		<img :src="github.avatar_url" alt="Githuber photo" />
-		<h2>{{ github.name }}</h2>
+	<div v-if="user.name">
+		<img :src="user.avatar_url" alt="Githuber image" />
+		<h1>{{ user.name }}</h1>
+	</div>
+	<div v-for="(repo, index) in repos" :key="index">
+		<h2>{{ repo.name }}</h2>
+		<p>{{ repo.description }}</p>
 	</div>
 </template>
 
@@ -16,18 +28,35 @@ export default {
 	data() {
 		return {
 			nick: "",
-			github: {},
+			repos: "",
+			user: "",
 		};
 	},
 	methods: {
-		searchGit: debounce(function () {
-			let api = "https://api.github.com/users/" + this.nick;
-			let vm = this;
-			axios.get(api).then(function (response) {
-				vm.github = response.data;
-				console.log(vm.github);
-			});
+		getUser: debounce(function () {
+			axios
+				.get(`https://api.github.com/users/${this.nick}`)
+				.then((response) => {
+					this.user = response.data;
+					console.log(this.user);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		}, 500),
+		getRepos: debounce(function () {
+			axios
+				.get(`https://api.github.com/users/${this.nick}/repos`)
+				.then((response) => {
+					this.repos = response.data;
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}, 500),
+	},
+	mounted() {
+		this.$refs.input.focus();
 	},
 };
 </script>

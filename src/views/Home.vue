@@ -2,6 +2,7 @@
 	<div class="home">
 		<h1>Koukni na svého oblíbeného Githubera</h1>
 		<HomeSearch />
+		<ul></ul>
 	</div>
 </template>
 
