@@ -1,10 +1,13 @@
 <template>
 	<div id="nav">
 		<router-link to="/">Home</router-link> |
-		<router-link to="/about">About App</router-link>
+		<router-link to="/about">About App</router-link> |
+		<router-link to="/searchgithuber">Search Githuber</router-link>
 	</div>
 	<router-view />
 </template>
+
+<script></script>
 
 <style lang="scss">
 #app {

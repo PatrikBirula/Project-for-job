@@ -3,20 +3,28 @@
 		<input
 			v-model="nick"
 			placeholder="Type Username"
-			@keyup="getUser(), getRepos()"
+			@keyup="getUser()"
 			ref="input"
 		/>
-		<div v-if="user.name">
-			<img :src="user.avatar_url" alt="Githuber image" />
-			<h1>{{ user.name }}</h1>
-		</div>
-		<ul>
-			<li v-for="(repo, index) in repos" :key="index">
-				<h2 v-on:click="getCommits(repo)">{{ repo.repoName }}</h2>
-				<p>{{ repo.repoDescription }}</p>
-			</li>
-		</ul>
 	</form>
+	<ul>
+		<li v-for="(repo, index) in repos" :key="index">
+			<transition name="fade">
+				<article v-cloak>
+					<div>
+						<h2>{{ repo.repoName }}</h2>
+						<p>{{ repo.repoDescription }}</p>
+					</div>
+					<button @submit.prevent v-on:click="getBranches(repo)">
+						Show Branches
+					</button>
+					<button @submit.prevent v-on:click="getCommits(repo)">
+						Show Commits
+					</button>
+				</article>
+			</transition>
+		</li>
+	</ul>
 </template>
 
 <script>
@@ -27,9 +35,10 @@ export default {
 	data() {
 		return {
 			nick: "Inza",
-			user: "",
 			repos: [],
 			value: [],
+			commits: [],
+			branches: [],
 		};
 	},
 	methods: {
@@ -37,8 +46,7 @@ export default {
 			axios
 				.get(`https://api.github.com/users/${this.nick}`)
 				.then((response) => {
-					this.user = response.data;
-					console.log(this.user);
+					this.users = response.data;
 				})
 				.catch((error) => {
 					console.log(error);
@@ -52,7 +60,6 @@ export default {
 					this.value = [];
 					response.data.forEach((repo) => {
 						this.repos.push(this.extractData(repo));
-						this.value.push(this.extractDataName(repo));
 					});
 				})
 				.catch((error) => {
@@ -65,10 +72,6 @@ export default {
 		extractData({ name: repoName, description: repoDescription, id: idM }) {
 			return { repoName, repoDescription, idM };
 		},
-		extractDataName({ name: repoName }) {
-			return { repoName };
-		},
-
 		getCommits(repo) {
 			console.log(repo.repoName);
 			axios
@@ -76,7 +79,21 @@ export default {
 					`https://api.github.com/repos/${this.nick}/${repo.repoName}/commits`
 				)
 				.then((response) => {
-					this.arrayOne = response.data;
+					this.commits = response.data;
+					console.log(this.arrayOne);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		getBranches(repo) {
+			console.log(repo.repoName);
+			axios
+				.get(
+					`https://api.github.com/repos/${this.nick}/${repo.repoName}/branches`
+				)
+				.then((response) => {
+					this.branches = response.data;
 					console.log(this.arrayOne);
 				})
 				.catch((error) => {
@@ -90,5 +107,11 @@ export default {
 <style lang="scss" scoped>
 li {
 	list-style-type: none;
+}
+.fade-enter-active {
+	transition: all 1s ease;
+}
+.fade-enter {
+	transform: scale(0.5);
 }
 </style>

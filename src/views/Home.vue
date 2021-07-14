@@ -1,18 +1,16 @@
 <template>
 	<div class="home">
-		<h1>Koukni na svého oblíbeného Githubera</h1>
-		<HomeSearch />
-		<ul></ul>
+		<img alt="Vue logo" src="../assets/logo.png" />
+		<component-1 />
 	</div>
 </template>
 
 <script>
-import HomeSearch from "@/components/home/HomeSearch.vue";
-
+import Component1 from "../components/Component1.vue";
 export default {
 	name: "Home",
 	components: {
-		HomeSearch,
+		Component1,
 	},
 };
 </script>
