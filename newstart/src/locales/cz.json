@@ -1,0 +1,16 @@
+{
+    "pages": {
+        "home": "Tato page je domácí",
+        "about": "Toto je stránka o aplikaci"
+    },
+    "navigations": {
+        "home": "Hledej",
+        "about": "About"
+    },
+    "labels": {
+        "searchgithuber": "Najdi svého oblíbeného Githubera!",
+        "setnick": "vlož nick",
+        "commits": "Posledních 10 commitů",
+        "branches": "Všechny větve"
+    }
+}
