@@ -1,0 +1,27 @@
+{
+    "pages": {
+        "home": "This page is home page",
+        "about": "Why i made it?"
+    },
+    "navigations": {
+        "home": "Search",
+        "about": "About"
+    },
+    "labels": {
+        "searchgithuber": "Find your favorite Githuber!",
+        "setnick": "enter nick",
+        "commits": "Last 10 commits",
+        "branches": "All branches",
+        "followers": "Followers:",
+        "company": "Company:",
+        "location": "Location:",
+        "repos": "Total repositories:",
+        "repo": "Repositories",
+        "name": "Name:",
+        "moredetails": "More information",
+        "error": "This nickname does't exist :("
+    },
+    "page": {
+        "abouttext": "Because it was a challange for me! I got new experience and i had a lot of fun! I´m not strong in english, so give me please a chance to be a new member of your team :). "
+    }
+}

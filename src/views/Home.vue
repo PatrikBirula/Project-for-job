@@ -1,16 +1,13 @@
 <template>
 	<div class="home">
-		<img alt="Vue logo" src="../assets/logo.png" />
-		<component-1 />
+		<h2>{{ $t("pages.home") }}</h2>
 	</div>
 </template>
 
 <script>
-import Component1 from "../components/Component1.vue";
+// @ is an alias to /src
+
 export default {
 	name: "Home",
-	components: {
-		Component1,
-	},
 };
 </script>

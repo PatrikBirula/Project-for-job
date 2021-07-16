@@ -1,0 +1,27 @@
+{
+    "pages": {
+        "home": "Tato page je domácí",
+        "about": "Cesta za vyptvořením aplikace"
+    },
+    "navigations": {
+        "home": "Hledej",
+        "about": "About"
+    },
+    "labels": {
+        "searchgithuber": "Najdi svého oblíbeného Githubera!",
+        "setnick": "vlož nick",
+        "commits": "Posledních 10 commitů",
+        "branches": "Všechny větve",
+        "followers": "Celkem sledujících:",
+        "company": "Firma:",
+        "location": "Místo:",
+        "repos": "Celkem repozitářů:",
+        "repo": "Repozitáře",
+        "name": "Jméno: ",
+        "moredetails": "Více informací",
+        "error": "Tento uživatel neexistuje :("
+    },
+    "page": {
+        "abouttext": "Tato aplikace bylo pro mne velká výzva, kde jsem se musel toho hodně nového naučit. Ale jsem šťastný, že funguje dle zadání a že jsem to stihl v termínu. Hodně jsem se toho naučil a vyzkoušel si jak se to dělá v roce 2021 :D. Těším se na další projekty, které udělám tímto způsobem, protože je to přeci jen přehlednější a i zábavnější než vanilla. Doufám, že se tedy stanu Štavnaťákem!, abych mohl pracovat na zajímavějších aplikacích ;) :D "
+    }
+}
