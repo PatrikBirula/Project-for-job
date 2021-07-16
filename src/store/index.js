@@ -6,54 +6,105 @@ export default createStore({
 		history: [0],
 		nick: "",
 		info: [],
+		repos: [],
+		reponame: [],
+		commits: [],
+		branches: [],
+		show: "",
+		error: "",
 	},
 	mutations: {
-		addToCounter(state, payload) {
-			state.counter = state.counter + payload;
-			state.history.push(state.counter);
+		showDetails(state) {
+			state.show = "show";
 		},
-		subtractFromCounter(state, payload) {
-			state.counter = state.counter - payload;
-			state.history.push(state.counter);
+		hideDetails(state) {
+			state.show = "hide";
+		},
+		showError(state) {
+			state.error = "show";
+		},
+		hideError(state) {
+			state.error = "hide";
 		},
 		getNick(state, payload) {
 			state.nick = payload;
 			console.log(state.nick);
 		},
-		getInfo(state, info) {
-			state.info = info;
+		getInfo(state, payload) {
+			state.info = payload;
+		},
+		getRepos(state, payload) {
+			state.repos = payload;
+		},
+		repoName(state, payload) {
+			state.reponame = payload;
+		},
+		getCommits(state, payload) {
+			state.commits = payload;
+		},
+		getBranches(state, payload) {
+			state.branches = payload;
 		},
 	},
 	actions: {
-		async addRandomNumber(context) {
-			let data = await axios.get(
-				`https://www.random.org/integers/?num=1&min=-1000&max=1000&col=1&base=10&format=plain&rnd=new`
-			);
-			console.log(data);
-			context.commit("addToCounter", data.data);
-		},
 		async findGithuberProfile({ commit, state }) {
+			await axios
+				.get("https://api.github.com/users/" + state.nick)
+				.then((response) => {
+					state.info = response.data;
+					commit("hideError");
+				})
+				.catch(() => {
+					commit("showError");
+				});
+			commit("getInfo", state.info);
+		},
+		async findGithuberRepos({ commit, state }) {
 			await axios
 				.get("https://api.github.com/users/" + state.nick + "/repos")
 				.then((response) => {
-					console.log(response.data);
-					commit("getInfo", response.data);
+					state.repos = response.data;
 				})
 				.catch((error) => {
 					console.log(error);
 				});
+			commit("getRepos", state.repos);
+		},
+		async findGithuberCommits({ commit, state }) {
+			await axios
+				.get(
+					"https://api.github.com/repos/" +
+						state.nick +
+						"/" +
+						state.reponame +
+						"/commits"
+				)
+				.then((response) => {
+					state.commits = response.data.slice(0, 10);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+			commit("getCommits", state.commits);
+			console.log(state.commits);
+		},
+		async findGithuberBranches({ commit, state }) {
+			await axios
+				.get(
+					"https://api.github.com/repos/" +
+						state.nick +
+						"/" +
+						state.reponame +
+						"/branches"
+				)
+				.then((response) => {
+					state.branches = response.data;
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+			commit("getBranches", state.branches);
+			console.log(state.branches);
 		},
 	},
-	getters: {
-		activeIndexes: (state) => (payload) => {
-			let indexes = [];
-			state.history.forEach((number, index) => {
-				if (number === payload) {
-					indexes.push(index);
-				}
-			});
-			return indexes;
-		},
-	},
-	modules: {},
 });
